@@ -1,0 +1,37 @@
+﻿@model ElectronicStoreMVC.Models.IndexViewModel
+@using ElectronicStoreModels.Models;
+@{
+    ViewData["Title"] = "Electronics Store";
+}
+
+@*<div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>*@
+
+
+@if (Model.ProductCategories != null)
+{
+    <section>
+        
+            @foreach (ProductCategory type in Model.ProductCategories)
+            {
+                <section class="main-screen-card">
+                    <h4>@type.CategoryName</h4>
+
+                    @foreach (Product product in Model.Products)
+                    {
+                        @if (product.Category == type.CategoryId)
+                        {
+
+                            <partial name="_ProductPartial" model="product" />
+
+                        }
+                    }
+
+                </section>
+        
+                
+            }
+    </section>
+}
