@@ -10,7 +10,7 @@ namespace ElectronicStoreModels
             return price * quantity;
         }
 
-        public static decimal RemainingQunatity(int totalQuantity, int SelectedQuantity)
+        public static int RemainingQuantity(int totalQuantity, int SelectedQuantity)
         {
             return totalQuantity - SelectedQuantity;
         }

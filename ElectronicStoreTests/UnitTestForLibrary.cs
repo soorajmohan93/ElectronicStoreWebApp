@@ -70,13 +70,13 @@ namespace ElectronicStoreTests
         [TestMethod]
         public void CalculationTest_RemainingQuantity()
         {
-            Assert.AreEqual(8, Calculations.RemainingQunatity(20, 12));
+            Assert.AreEqual(8, Calculations.RemainingQuantity(20, 12));
         }
 
         [TestMethod]
         public void CalculationTest_RemainingQuantity_NegativeValue()
         {
-            Assert.AreEqual(-10, Calculations.RemainingQunatity(-21, -11));
+            Assert.AreEqual(-10, Calculations.RemainingQuantity(-21, -11));
         }
 
         [TestMethod]
@@ -84,7 +84,7 @@ namespace ElectronicStoreTests
         [DataRow(37, 2)]
         public void CalculationTest_RemainingQuantity_PostiveValues(int totalQuantity, int SelectedQuantity)
         {
-            Assert.AreEqual(totalQuantity-SelectedQuantity, Calculations.RemainingQunatity(totalQuantity,SelectedQuantity));
+            Assert.AreEqual(totalQuantity-SelectedQuantity, Calculations.RemainingQuantity(totalQuantity,SelectedQuantity));
         }
 
         [TestMethod]
@@ -92,7 +92,7 @@ namespace ElectronicStoreTests
         [DataRow(-355, -244)]
         public void CalculationTest_RemainingQuantity_NegativeValues(int totalQuantity, int SelectedQuantity)
         {
-            Assert.AreEqual(totalQuantity - SelectedQuantity, Calculations.RemainingQunatity(totalQuantity, SelectedQuantity));
+            Assert.AreEqual(totalQuantity - SelectedQuantity, Calculations.RemainingQuantity(totalQuantity, SelectedQuantity));
         }
 
         [TestMethod]
@@ -100,7 +100,7 @@ namespace ElectronicStoreTests
         [DataRow(-323, 1122)]
         public void CalculationTest_RemainingQuantity_OneNegativeValue_OnePostiveValue(int totalQuantity, int SelectedQuantity)
         {
-            Assert.AreEqual(totalQuantity - SelectedQuantity, Calculations.RemainingQunatity(totalQuantity, SelectedQuantity));
+            Assert.AreEqual(totalQuantity - SelectedQuantity, Calculations.RemainingQuantity(totalQuantity, SelectedQuantity));
         }
 
         [TestMethod]
@@ -108,7 +108,7 @@ namespace ElectronicStoreTests
         [DataRow(12, -86)]
         public void CalculationTest_RemainingQuantity_OnePositiveValue_OneNegativeValue(int totalQuantity, int SelectedQuantity)
         {
-            Assert.AreEqual(totalQuantity - SelectedQuantity, Calculations.RemainingQunatity(totalQuantity, SelectedQuantity));
+            Assert.AreEqual(totalQuantity - SelectedQuantity, Calculations.RemainingQuantity(totalQuantity, SelectedQuantity));
         }
     }
 }
