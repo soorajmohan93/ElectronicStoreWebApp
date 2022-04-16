@@ -14,6 +14,9 @@ namespace ElectronicStoreMVC.Controllers
     {
         private readonly ElectronicStoreContext _context;
 
+        [BindProperty(SupportsGet = true)]
+        public string CategoryTitle { get; set; }
+
         public ProductController(ElectronicStoreContext context)
         {
             _context = context;

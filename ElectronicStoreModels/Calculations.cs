@@ -5,12 +5,12 @@ namespace ElectronicStoreModels
 {
     public class Calculations
     {
-        public decimal TotalPrice(decimal price, int quantity)
+        public static decimal TotalPrice(decimal price, int quantity)
         {
             return price * quantity;
         }
 
-        public decimal RemainingQunatity(int totalQuantity, int SelectedQuantity)
+        public static decimal RemainingQunatity(int totalQuantity, int SelectedQuantity)
         {
             return totalQuantity - SelectedQuantity;
         }

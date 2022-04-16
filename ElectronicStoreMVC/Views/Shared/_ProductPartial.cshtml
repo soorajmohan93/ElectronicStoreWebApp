@@ -1,4 +1,5 @@
 ﻿@model ElectronicStoreModels.Models.Product
+@using ElectronicStoreModels
 @{
 }
 
@@ -9,5 +10,7 @@
     </header>
     <section class="card-numbers">
         <div><span>Price: CAD @Model.ProductPrice</span></div>
+        <div><span>Stock Quantity: @Model.ProductStock</span></div>
+        <div><span>Stock Value: CAD @Calculations.TotalPrice(@Model.ProductPrice, @Model.ProductStock)</span></div>
     </section>
 </section>

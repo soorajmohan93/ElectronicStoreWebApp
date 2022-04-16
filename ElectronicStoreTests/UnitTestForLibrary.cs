@@ -8,23 +8,18 @@ namespace ElectronicStoreTests
     [TestClass]
     public class UnitTestForLibrary
     {
-        private readonly Calculations _calculations;
 
-        public UnitTestForLibrary()
-        {
-            _calculations = new Calculations();
-        }
 
         [TestMethod]
         public void CalculationTest_TotalPrice()
         {
-            Assert.AreEqual(3019.8M, _calculations.TotalPrice(150.99M, 20));
+            Assert.AreEqual(3019.8M, Calculations.TotalPrice(150.99M, 20));
         }
 
         [TestMethod]
         public void CalculationTest_TotalPrice_withNegatives()
         {
-            Assert.AreEqual(4522.50M, _calculations.TotalPrice(-100.50M, -45));
+            Assert.AreEqual(4522.50M, Calculations.TotalPrice(-100.50M, -45));
         }
 
         [TestMethod]
@@ -33,7 +28,7 @@ namespace ElectronicStoreTests
         public void CalculationTest_TotalPrice_WithoutDecimals(double inPrice, int quantity)
         {
             decimal price = (decimal)inPrice;
-            Assert.AreEqual(price*quantity, _calculations.TotalPrice(price, quantity));
+            Assert.AreEqual(price*quantity, Calculations.TotalPrice(price, quantity));
         }
 
         [TestMethod]
@@ -42,7 +37,7 @@ namespace ElectronicStoreTests
         public void CalculationTest_TotalPrice_WithDecimalsPrice(double inPrice, int quantity)
         {
             decimal price = (decimal)inPrice;
-            Assert.AreEqual(price * quantity, _calculations.TotalPrice(price, quantity));
+            Assert.AreEqual(price * quantity, Calculations.TotalPrice(price, quantity));
         }
 
         [TestMethod]
@@ -51,7 +46,7 @@ namespace ElectronicStoreTests
         public void CalculationTest_TotalPrice_WithNegativePrice(double inPrice, int quantity)
         {
             decimal price = (decimal)inPrice;
-            Assert.AreEqual(price * quantity, _calculations.TotalPrice(price, quantity));
+            Assert.AreEqual(price * quantity, Calculations.TotalPrice(price, quantity));
         }
 
         [TestMethod]
@@ -60,7 +55,7 @@ namespace ElectronicStoreTests
         public void CalculationTest_TotalPrice_WithNegativeQuantity(double inPrice, int quantity)
         {
             decimal price = (decimal)inPrice;
-            Assert.AreEqual(price * quantity, _calculations.TotalPrice(price, quantity));
+            Assert.AreEqual(price * quantity, Calculations.TotalPrice(price, quantity));
         }
 
         [TestMethod]
@@ -69,19 +64,19 @@ namespace ElectronicStoreTests
         public void CalculationTest_TotalPrice_WithNegativeIntegerPrice(double inPrice, int quantity)
         {
             decimal price = (decimal)inPrice;
-            Assert.AreEqual(price * quantity, _calculations.TotalPrice(price, quantity));
+            Assert.AreEqual(price * quantity, Calculations.TotalPrice(price, quantity));
         }
 
         [TestMethod]
         public void CalculationTest_RemainingQuantity()
         {
-            Assert.AreEqual(8, _calculations.RemainingQunatity(20, 12));
+            Assert.AreEqual(8, Calculations.RemainingQunatity(20, 12));
         }
 
         [TestMethod]
         public void CalculationTest_RemainingQuantity_NegativeValue()
         {
-            Assert.AreEqual(-10, _calculations.RemainingQunatity(-21, -11));
+            Assert.AreEqual(-10, Calculations.RemainingQunatity(-21, -11));
         }
 
         [TestMethod]
@@ -89,7 +84,7 @@ namespace ElectronicStoreTests
         [DataRow(37, 2)]
         public void CalculationTest_RemainingQuantity_PostiveValues(int totalQuantity, int SelectedQuantity)
         {
-            Assert.AreEqual(totalQuantity-SelectedQuantity, _calculations.RemainingQunatity(totalQuantity,SelectedQuantity));
+            Assert.AreEqual(totalQuantity-SelectedQuantity, Calculations.RemainingQunatity(totalQuantity,SelectedQuantity));
         }
 
         [TestMethod]
@@ -97,7 +92,7 @@ namespace ElectronicStoreTests
         [DataRow(-355, -244)]
         public void CalculationTest_RemainingQuantity_NegativeValues(int totalQuantity, int SelectedQuantity)
         {
-            Assert.AreEqual(totalQuantity - SelectedQuantity, _calculations.RemainingQunatity(totalQuantity, SelectedQuantity));
+            Assert.AreEqual(totalQuantity - SelectedQuantity, Calculations.RemainingQunatity(totalQuantity, SelectedQuantity));
         }
 
         [TestMethod]
@@ -105,7 +100,7 @@ namespace ElectronicStoreTests
         [DataRow(-323, 1122)]
         public void CalculationTest_RemainingQuantity_OneNegativeValue_OnePostiveValue(int totalQuantity, int SelectedQuantity)
         {
-            Assert.AreEqual(totalQuantity - SelectedQuantity, _calculations.RemainingQunatity(totalQuantity, SelectedQuantity));
+            Assert.AreEqual(totalQuantity - SelectedQuantity, Calculations.RemainingQunatity(totalQuantity, SelectedQuantity));
         }
 
         [TestMethod]
@@ -113,7 +108,7 @@ namespace ElectronicStoreTests
         [DataRow(12, -86)]
         public void CalculationTest_RemainingQuantity_OnePositiveValue_OneNegativeValue(int totalQuantity, int SelectedQuantity)
         {
-            Assert.AreEqual(totalQuantity - SelectedQuantity, _calculations.RemainingQunatity(totalQuantity, SelectedQuantity));
+            Assert.AreEqual(totalQuantity - SelectedQuantity, Calculations.RemainingQunatity(totalQuantity, SelectedQuantity));
         }
     }
 }
