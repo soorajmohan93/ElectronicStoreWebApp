@@ -147,7 +147,7 @@ namespace ElectronicStoreTests
         }
 
         [TestMethod]
-        public void HomePage_NavigateHome_NavigateProduct_NavigateIdentityRegister()
+        public void HomePage_NavigateHome_NavigateProduct_IdentityRegister()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
             _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[3].Click();
@@ -155,7 +155,7 @@ namespace ElectronicStoreTests
         }
 
         [TestMethod]
-        public void HomePage_NavigateHome_NavigateProduct_NavigateIdentityLogin()
+        public void HomePage_NavigateHome_NavigateProduct_IdentityLogin()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
             _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[4].Click();
