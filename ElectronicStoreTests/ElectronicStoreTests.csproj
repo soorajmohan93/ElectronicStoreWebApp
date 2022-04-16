@@ -19,4 +19,7 @@
     <None Remove="Selenium.WebDriver" />
     <None Remove="WebDriverManager" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ElectronicStoreModels\ElectronicStoreModels.csproj" />
+  </ItemGroup>
 </Project>

@@ -26,6 +26,7 @@ namespace ElectronicStoreModels.Models
 
         [Required]
         [Display(Name = "Quantity of Product in Stock", Description = "Quantity of Product in Stock")]
+        [Range(0, Int32.MaxValue)]
         public int ProductStock { get; set; }
 
         public ProductCategory ProductCategory { get; set; }
