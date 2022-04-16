@@ -62,6 +62,106 @@ namespace ElectronicStoreTests
             Assert.IsTrue(_webDriver.Title.Contains("Edit Product"));
         }
 
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateProduct_NavigateDeleteProduct()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
+            _webDriver.FindElement(By.CssSelector("a.delete-clickable")).Click();
+            Assert.IsTrue(_webDriver.Title.Contains("Delete Product"));
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateProduct_NavigateProductDetails()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
+            _webDriver.FindElement(By.CssSelector("a.details-clickable")).Click();
+            Assert.IsTrue(_webDriver.Title.Contains("Product Details"));
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateProduct_NavigateCreateProductCategory()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[1].Click();
+            _webDriver.FindElement(By.CssSelector("a.create-new-clickable")).Click();
+            Assert.IsTrue(_webDriver.Title.Contains("Create Product Category"));
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateProduct_NavigateEditProductCategory()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[1].Click();
+            _webDriver.FindElement(By.CssSelector("a.edit-clickable")).Click();
+            Assert.IsTrue(_webDriver.Title.Contains("Edit Product Category"));
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateProduct_NavigateDeleteProductCategory()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[1].Click();
+            _webDriver.FindElement(By.CssSelector("a.delete-clickable")).Click();
+            Assert.IsTrue(_webDriver.Title.Contains("Delete Product Category"));
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateProduct_NavigateProductCategoryDetails()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[1].Click();
+            _webDriver.FindElement(By.CssSelector("a.details-clickable")).Click();
+            Assert.IsTrue(_webDriver.Title.Contains("Product Category Details"));
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateProduct_CreateProductCategory()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[1].Click();
+            _webDriver.FindElement(By.CssSelector("a.create-new-clickable")).Click();
+            var input = _webDriver.FindElement(By.CssSelector("input[name='CategoryName']"));
+            input.SendKeys("Testing Category");
+            _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
+            Assert.IsTrue(_webDriver.Title.Contains("Log in - ESA"));
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateProduct_CreateProduct()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
+            _webDriver.FindElement(By.CssSelector("a.create-new-clickable")).Click();
+            var input = _webDriver.FindElement(By.CssSelector("input[name='ProductName']"));
+            input.SendKeys("Testing Product");
+            input = _webDriver.FindElement(By.CssSelector("input[name='ProductDesc']"));
+            input.SendKeys("Testing Product Description");
+            input = _webDriver.FindElement(By.CssSelector("input[name='ProductPrice']"));
+            input.SendKeys("0.00");
+            input = _webDriver.FindElement(By.CssSelector("input[name='ProductStock']"));
+            input.SendKeys("0.00");
+            _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
+            Assert.IsTrue(_webDriver.Title.Contains("Log in - ESA"));
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateProduct_NavigateIdentityRegister()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[3].Click();
+            Assert.IsTrue(_webDriver.Title.Contains("Register - ESA"));
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateProduct_NavigateIdentityLogin()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[4].Click();
+            Assert.IsTrue(_webDriver.Title.Contains("Log in - ESA"));
+        }
+
         [TestCleanup]
         public void TearDown()
         {
