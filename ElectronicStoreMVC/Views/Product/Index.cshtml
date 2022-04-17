@@ -1,14 +1,12 @@
 @model ElectronicStoreMVC.Models.ProductViewModel
 
-@{
-    ViewData["Title"] = "Maintain Products";
-}
+@{ ViewData["Title"] = "Maintain Products"; }
 
 <h1>Product Listing</h1>
 
 <form>
     <p>
-        Title: <input type="text" asp-for="ProductName" />
+        Search for Products: <input type="text" asp-for="ProductName" />
         <input type="submit" value="Filter" />
     </p>
 </form>
@@ -16,7 +14,19 @@
 
 <p>
     <a class="create-new-clickable" asp-action="Create">Create New</a>
+    
 </p>
+
+
+<p>
+    @if (ViewData["ProductName"] != null)
+    {
+        <div>Search Result for @ViewData["ProductName"]</div>
+    }
+</p>
+
+
+
 <table class="table">
     <thead>
         <tr>
@@ -39,29 +49,34 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Products) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductDesc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductStock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductCategory.CategoryName)
-            </td>
-            <td>
-                <a class="edit-clickable" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                <a class="details-clickable" asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                <a class="delete-clickable" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
-            </td>
-        </tr>
+        @foreach (var item in Model.Products)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProductName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProductDesc)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProductPrice)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProductStock)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProductCategory.CategoryName)
+    </td>
+    <td>
+        <a class="edit-clickable" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+        <a class="details-clickable" asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+        <a class="delete-clickable" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+    </td>
+</tr>
 }
     </tbody>
 </table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

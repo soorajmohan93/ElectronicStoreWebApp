@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ElectronicStoreModels.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ElectronicStoreMVC.Controllers
 {
@@ -53,6 +54,7 @@ namespace ElectronicStoreMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("CustomerId,CustomerName,CustomerAddress,PhoneNumber,CustomerEmail")] Customer customer)
         {
             if (ModelState.IsValid)
@@ -85,6 +87,7 @@ namespace ElectronicStoreMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("CustomerId,CustomerName,CustomerAddress,PhoneNumber,CustomerEmail")] Customer customer)
         {
             if (id != customer.CustomerId)
@@ -136,6 +139,7 @@ namespace ElectronicStoreMVC.Controllers
         // POST: Customer/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var customer = await _context.Customer.FindAsync(id);

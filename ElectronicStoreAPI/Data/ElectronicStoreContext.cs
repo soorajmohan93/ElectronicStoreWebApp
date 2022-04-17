@@ -15,4 +15,8 @@ using ElectronicStoreModels.Models;
         public DbSet<ElectronicStoreModels.Models.ProductCategory> ProductCategory { get; set; }
 
         public DbSet<ElectronicStoreModels.Models.Product> Product { get; set; }
+
+        public DbSet<ElectronicStoreModels.Models.Customer> Customer { get; set; }
+
+        public DbSet<ElectronicStoreModels.Models.Cart> Cart { get; set; }
     }
