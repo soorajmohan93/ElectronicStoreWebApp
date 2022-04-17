@@ -9,10 +9,12 @@ namespace ElectronicStoreModels.Models
         [Key]
         public int CartId { get; set; }
 
-        [ForeignKey("Products"), Display(Name = "Product", Description = "Product")]
+        [Required]
+        [ForeignKey("Products"), Display(Name = "Select Product", Description = "Select Product")]
         public int Product { get; set; }
 
-        [ForeignKey("Customers"), Display(Name = "Customer", Description = "Customer")]
+        [Required]
+        [ForeignKey("Customers"), Display(Name = "Select Customer", Description = "Select Customer")]
         public int Customer { get; set; }
 
         public Product Products { get; set; }

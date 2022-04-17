@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -30,5 +32,7 @@ namespace ElectronicStoreModels.Models
         public int ProductStock { get; set; }
 
         public ProductCategory ProductCategory { get; set; }
+
+        public ICollection<Cart> Carts { get; set; }
     }
 }

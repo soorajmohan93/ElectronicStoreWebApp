@@ -6,27 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ElectronicStoreModels.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ElectronicStoreMVC.Controllers
 {
-    public class ProductController : Controller
+    public class CustomerController : Controller
     {
         private readonly ElectronicStoreContext _context;
 
-        public ProductController(ElectronicStoreContext context)
+        public CustomerController(ElectronicStoreContext context)
         {
             _context = context;
         }
 
-        // GET: Product
+        // GET: Customer
         public async Task<IActionResult> Index()
         {
-            var electronicStoreContext = _context.Product.Include(p => p.ProductCategory);
-            return View(await electronicStoreContext.ToListAsync());
+            return View(await _context.Customer.ToListAsync());
         }
 
-        // GET: Product/Details/5
+        // GET: Customer/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,43 +32,39 @@ namespace ElectronicStoreMVC.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
-                .Include(p => p.ProductCategory)
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (product == null)
+            var customer = await _context.Customer
+                .FirstOrDefaultAsync(m => m.CustomerId == id);
+            if (customer == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(customer);
         }
 
-        // GET: Product/Create
+        // GET: Customer/Create
         public IActionResult Create()
         {
-            ViewData["Category"] = new SelectList(_context.ProductCategory, "CategoryId", "CategoryName");
             return View();
         }
 
-        // POST: Product/Create
+        // POST: Customer/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> Create([Bind("ProductId,ProductName,Category,ProductDesc,ProductPrice,ProductStock")] Product product)
+        public async Task<IActionResult> Create([Bind("CustomerId,CustomerName,CustomerAddress,PhoneNumber,CustomerEmail")] Customer customer)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+                _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Category"] = new SelectList(_context.ProductCategory, "CategoryId", "CategoryName", product.Category);
-            return View(product);
+            return View(customer);
         }
 
-        // GET: Product/Edit/5
+        // GET: Customer/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,24 +72,22 @@ namespace ElectronicStoreMVC.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var customer = await _context.Customer.FindAsync(id);
+            if (customer == null)
             {
                 return NotFound();
             }
-            ViewData["Category"] = new SelectList(_context.ProductCategory, "CategoryId", "CategoryName", product.Category);
-            return View(product);
+            return View(customer);
         }
 
-        // POST: Product/Edit/5
+        // POST: Customer/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,Category,ProductDesc,ProductPrice,ProductStock")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,CustomerName,CustomerAddress,PhoneNumber,CustomerEmail")] Customer customer)
         {
-            if (id != product.ProductId)
+            if (id != customer.CustomerId)
             {
                 return NotFound();
             }
@@ -104,12 +96,12 @@ namespace ElectronicStoreMVC.Controllers
             {
                 try
                 {
-                    _context.Update(product);
+                    _context.Update(customer);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.ProductId))
+                    if (!CustomerExists(customer.CustomerId))
                     {
                         return NotFound();
                     }
@@ -120,11 +112,10 @@ namespace ElectronicStoreMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Category"] = new SelectList(_context.ProductCategory, "CategoryId", "CategoryName", product.Category);
-            return View(product);
+            return View(customer);
         }
 
-        // GET: Product/Delete/5
+        // GET: Customer/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,32 +123,30 @@ namespace ElectronicStoreMVC.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
-                .Include(p => p.ProductCategory)
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (product == null)
+            var customer = await _context.Customer
+                .FirstOrDefaultAsync(m => m.CustomerId == id);
+            if (customer == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(customer);
         }
 
-        // POST: Product/Delete/5
+        // POST: Customer/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            _context.Product.Remove(product);
+            var customer = await _context.Customer.FindAsync(id);
+            _context.Customer.Remove(customer);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductExists(int id)
+        private bool CustomerExists(int id)
         {
-            return _context.Product.Any(e => e.ProductId == id);
+            return _context.Customer.Any(e => e.CustomerId == id);
         }
     }
 }
