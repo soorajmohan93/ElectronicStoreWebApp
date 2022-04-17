@@ -14,12 +14,12 @@ namespace ElectronicStoreMVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private readonly ElectronicStoreContext DbContext;
+        private readonly ElectronicStoreContext _DbContext;
 
         public HomeController(ILogger<HomeController> logger, ElectronicStoreContext context)
         {
             _logger = logger;
-            DbContext = context;
+            _DbContext = context;
         }
 
         public IList<ProductCategory> ProductCategories { get; set; }
@@ -27,8 +27,8 @@ namespace ElectronicStoreMVC.Controllers
 
         public IActionResult Index()
         {
-            ProductCategories = DbContext.ProductCategory.ToList();
-            Products = DbContext.Product.ToList();
+            ProductCategories = _DbContext.ProductCategory.ToList();
+            Products = _DbContext.Product.ToList();
             return View(new IndexViewModel() { ProductCategories = ProductCategories, Products = Products });
         }
 

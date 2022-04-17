@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ElectronicStoreModels.Models;
+using ElectronicStoreMVC.Models;
+using Microsoft.AspNetCore.Authorization;
+using ElectronicStoreModels;
 
 namespace ElectronicStoreMVC.Controllers
 {
@@ -18,11 +21,24 @@ namespace ElectronicStoreMVC.Controllers
             _context = context;
         }
 
-        // GET: Cart
-        public async Task<IActionResult> Index()
+
+
+        public IActionResult Index(int? Customer)
         {
-            var electronicStoreContext = _context.Cart.Include(c => c.Customers).Include(c => c.Products);
-            return View(await electronicStoreContext.ToListAsync());
+
+            ViewData["Customer"] = new SelectList(_context.Customer, "CustomerId", "CustomerName");
+
+            var carts = from c in _context.Cart.Include(c => c.Customers).Include(c => c.Products)
+                        select c;
+
+            if (Customer != null)
+            {
+                carts = carts.Where(x => x.Customer == Customer);
+            }
+
+            CartViewModel cartView = new CartViewModel() { Carts = carts };
+            return View(cartView);
+
         }
 
         // GET: Cart/Details/5
@@ -58,11 +74,18 @@ namespace ElectronicStoreMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("CartId,Product,Customer")] Cart cart)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(cart);
+
+                Product product = cart.Products;
+                product.ProductStock = Calculations.RemainingQuantity(1,2);
+
+
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

@@ -1,4 +1,4 @@
-@model IEnumerable<ElectronicStoreModels.Models.Cart>
+@model ElectronicStoreMVC.Models.CartViewModel
 
 @{
     ViewData["Title"] = "Maintain Cart";
@@ -9,26 +9,36 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form>
+    <p>
+        <select asp-for="Customer" asp-items="ViewBag.Customer">
+            <option value="">All</option>
+        </select>
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Products)
+                Product
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customers)
+                Customer
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Carts) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Products.ProductDesc)
+                @Html.DisplayFor(modelItem => item.Products.ProductName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customers.CustomerEmail)
+                @Html.DisplayFor(modelItem => item.Customers.CustomerName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CartId">Edit</a> |
