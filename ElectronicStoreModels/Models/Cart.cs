@@ -17,6 +17,11 @@ namespace ElectronicStoreModels.Models
         [ForeignKey("Customers"), Display(Name = "Select Customer", Description = "Select Customer")]
         public int Customer { get; set; }
 
+        [Required]
+        [Display(Name = "Quantity of Product in Cart", Description = "Quantity of Product in Cart")]
+        [Range(0, Int32.MaxValue)]
+        public int CartQuantity { get; set; }
+
         public Product Products { get; set; }
 
         public Customer Customers { get; set; }

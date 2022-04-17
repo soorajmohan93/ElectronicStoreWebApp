@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ElectronicStoreModels.Models;
 using ElectronicStoreMVC.Models;
-using Microsoft.AspNetCore.Authorization;
 using ElectronicStoreModels;
 
 namespace ElectronicStoreMVC.Controllers
@@ -21,8 +20,7 @@ namespace ElectronicStoreMVC.Controllers
             _context = context;
         }
 
-
-
+        // GET: Cart
         public IActionResult Index(int? Customer)
         {
 
@@ -35,7 +33,6 @@ namespace ElectronicStoreMVC.Controllers
             {
                 carts = carts.Where(x => x.Customer == Customer);
             }
-
             CartViewModel cartView = new CartViewModel() { Carts = carts };
             return View(cartView);
 
@@ -74,19 +71,32 @@ namespace ElectronicStoreMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> Create([Bind("CartId,Product,Customer")] Cart cart)
+        public async Task<IActionResult> Create([Bind("CartId,Product,Customer,CartQuantity")] Cart cart)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(cart);
-
-                Product product = cart.Products;
-                product.ProductStock = Calculations.RemainingQuantity(1,2);
-
-
-
-                await _context.SaveChangesAsync();
+                var query = from p in _context.Product
+                            where p.ProductId == cart.Product
+                            select p;
+                Product product = query.FirstOrDefault<Product>();
+                try
+                {
+                    product.ProductStock = Calculations.RemainingQuantity(product.ProductStock, cart.CartQuantity);
+                    _context.Update(product);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(product.ProductId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
             ViewData["Customer"] = new SelectList(_context.Customer, "CustomerId", "CustomerName", cart.Customer);
@@ -117,7 +127,7 @@ namespace ElectronicStoreMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CartId,Product,Customer")] Cart cart)
+        public async Task<IActionResult> Edit(int id, [Bind("CartId,Product,Customer,CartQuantity")] Cart cart)
         {
             if (id != cart.CartId)
             {
@@ -128,8 +138,33 @@ namespace ElectronicStoreMVC.Controllers
             {
                 try
                 {
-                    _context.Update(cart);
-                    await _context.SaveChangesAsync();
+                    var queryCart = from c in _context.Cart.AsNoTracking()
+                                where c.CartId == cart.CartId
+                                select c;
+                    Cart oldCart = queryCart.FirstOrDefault<Cart>();
+                    
+                    var queryProduct = from p in _context.Product
+                                where p.ProductId == cart.Product
+                                select p;
+                    Product product = queryProduct.FirstOrDefault<Product>();
+                    try
+                    {
+                        product.ProductStock = Calculations.RemainingQuantity(product.ProductStock, cart.CartQuantity - oldCart.CartQuantity);
+                        _context.Update(cart);
+                        _context.Update(product);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!ProductExists(product.ProductId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -176,13 +211,38 @@ namespace ElectronicStoreMVC.Controllers
         {
             var cart = await _context.Cart.FindAsync(id);
             _context.Cart.Remove(cart);
-            await _context.SaveChangesAsync();
+            var query = from p in _context.Product
+                        where p.ProductId == cart.Product
+                        select p;
+            Product product = query.FirstOrDefault<Product>();
+            try
+            {
+                product.ProductStock = Calculations.RemainingQuantity(product.ProductStock, cart.CartQuantity*-1);
+                _context.Update(product);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductExists(product.ProductId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
             return RedirectToAction(nameof(Index));
         }
 
         private bool CartExists(int id)
         {
             return _context.Cart.Any(e => e.CartId == id);
+        }
+
+        private bool ProductExists(int id)
+        {
+            return _context.Product.Any(e => e.ProductId == id);
         }
     }
 }

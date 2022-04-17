@@ -12,6 +12,7 @@
 
 <form>
     <p>
+        <label asp-for="Customer">Filter By Customer</label>
         <select asp-for="Customer" asp-items="ViewBag.Customer">
             <option value="">All</option>
         </select>
@@ -28,6 +29,9 @@
             <th>
                 Customer
             </th>
+            <th>
+                Quantity
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -39,6 +43,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Customers.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CartQuantity)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CartId">Edit</a> |

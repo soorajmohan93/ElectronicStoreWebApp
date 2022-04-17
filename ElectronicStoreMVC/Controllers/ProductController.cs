@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ElectronicStoreModels.Models;
 using Microsoft.AspNetCore.Authorization;
+using ElectronicStoreMVC.Models;
 
 namespace ElectronicStoreMVC.Controllers
 {
@@ -19,11 +20,27 @@ namespace ElectronicStoreMVC.Controllers
             _context = context;
         }
 
-        // GET: Product
-        public async Task<IActionResult> Index()
+        //// GET: Product
+        //public async Task<IActionResult> Index()
+        //{
+        //    var electronicStoreContext = _context.Product.Include(p => p.ProductCategory);
+        //    return View(await electronicStoreContext.ToListAsync());
+        //}
+
+
+        public async Task<IActionResult> Index(string ProductName)
         {
-            var electronicStoreContext = _context.Product.Include(p => p.ProductCategory);
-            return View(await electronicStoreContext.ToListAsync());
+            var products = from p in _context.Product.Include(c => c.ProductCategory)
+                        select p;
+
+            if (!string.IsNullOrEmpty(ProductName))
+            {
+                products = products.Where(x => x.ProductName.Contains(ProductName));
+            }
+
+
+            ProductViewModel product = new ProductViewModel() { Products = products };
+            return View(product);
         }
 
         // GET: Product/Details/5

@@ -1,10 +1,18 @@
-@model IEnumerable<ElectronicStoreModels.Models.Product>
+@model ElectronicStoreMVC.Models.ProductViewModel
 
 @{
     ViewData["Title"] = "Maintain Products";
 }
 
 <h1>Product Listing</h1>
+
+<form>
+    <p>
+        Title: <input type="text" asp-for="ProductName" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 
 <p>
     <a class="create-new-clickable" asp-action="Create">Create New</a>
@@ -13,25 +21,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ProductName)
+                Product
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductDesc)
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductPrice)
+                Price in CAD
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductStock)
+                Stock Quantity
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductCategory)
+                Product Category
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Products) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.ProductName)
