@@ -87,9 +87,37 @@ namespace ElectronicStoreTests
             input = _webDriver.FindElement(By.CssSelector("input[name='ProductPrice']"));
             input.SendKeys("0.00");
             input = _webDriver.FindElement(By.CssSelector("input[name='ProductStock']"));
-            input.SendKeys("0.00");
+            input.SendKeys("1");
             _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
             Assert.IsTrue(_webDriver.Title.Contains("Log in - ESA"));
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateProduct_CreateBlankProduct()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
+            _webDriver.FindElement(By.CssSelector("a.create-new-clickable")).Click();
+            _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
+            Assert.AreEqual("The Name of Product field is required.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[0].Text);
+            Assert.AreEqual("The Description of Product field is required.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[1].Text);
+            Assert.AreEqual("The Price of Product field is required.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[2].Text);
+            Assert.AreEqual("The Quantity of Product in Stock field is required.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[3].Text);
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateProduct_CreateProductWithInvalidNumbers()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
+            _webDriver.FindElement(By.CssSelector("a.create-new-clickable")).Click();
+            var input = _webDriver.FindElement(By.CssSelector("input[name='ProductPrice']"));
+            input.SendKeys("Test");
+            input = _webDriver.FindElement(By.CssSelector("input[name='ProductStock']"));
+            input.SendKeys("-10");
+            _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
+            Assert.AreEqual("The field Price of Product must be a number.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[2].Text);
+            Assert.AreEqual("Quantity should be greater than 0.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[3].Text);
         }
 
         [TestCleanup]

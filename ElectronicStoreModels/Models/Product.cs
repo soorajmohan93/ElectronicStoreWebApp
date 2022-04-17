@@ -28,7 +28,7 @@ namespace ElectronicStoreModels.Models
 
         [Required]
         [Display(Name = "Quantity of Product in Stock", Description = "Quantity of Product in Stock")]
-        [Range(0, Int32.MaxValue)]
+        [Range(1, Int32.MaxValue, ErrorMessage = "Quantity should be greater than 0.")]
         public int ProductStock { get; set; }
 
         public ProductCategory ProductCategory { get; set; }

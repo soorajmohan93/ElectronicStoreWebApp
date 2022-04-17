@@ -17,7 +17,7 @@ namespace ElectronicStoreModels.Models
         public string CustomerAddress { get; set; }
 
         [Required]
-        [RegularExpression(@"^([0-9]{10})$")]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number. Enter 10 digit Phone Number.")]
         [Display(Name = "Customer Phone Number", Description = "Customer Phone Number")]
         public string PhoneNumber { get; set; }
 
