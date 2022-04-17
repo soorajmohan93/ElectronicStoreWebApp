@@ -7,7 +7,7 @@
 <h1>List of Cart Items</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="create-new-clickable" asp-action="Create">Create New</a>
 </p>
 
 <form>
@@ -48,9 +48,9 @@
                 @Html.DisplayFor(modelItem => item.CartQuantity)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CartId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CartId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CartId">Delete</a>
+                <a class="edit-clickable" asp-action="Edit" asp-route-id="@item.CartId">Edit</a> |
+                <a class="details-clickable" asp-action="Details" asp-route-id="@item.CartId">Details</a> |
+                <a class="delete-clickable" asp-action="Delete" asp-route-id="@item.CartId">Delete</a>
             </td>
         </tr>
 }

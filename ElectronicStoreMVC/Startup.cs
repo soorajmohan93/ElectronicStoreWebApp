@@ -45,7 +45,12 @@ namespace ElectronicStoreMVC
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions {
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Add("Cache-Control", "604800");
+                }
+            });
 
             app.UseRouting();
 

@@ -19,7 +19,7 @@ namespace ElectronicStoreModels.Models
         [Required]
         [RegularExpression(@"^([0-9]{10})$")]
         [Display(Name = "Customer Phone Number", Description = "Customer Phone Number")]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         [Required]
         [EmailAddress]

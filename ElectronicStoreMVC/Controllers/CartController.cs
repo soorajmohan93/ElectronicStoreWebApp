@@ -114,7 +114,7 @@ namespace ElectronicStoreMVC.Controllers
                 return NotFound();
             }
 
-            var cart = await _context.Cart.FindAsync(id);
+            var cart = await _context.Cart.Include(c => c.Customers).Include(c => c.Products).FirstOrDefaultAsync(m => m.CartId == id);
             if (cart == null)
             {
                 return NotFound();

@@ -6,8 +6,10 @@
 
 <form>
     <p>
-        Search for Products: <input type="text" asp-for="ProductName" />
-        <input type="submit" value="Filter" />
+        Search for Products: <input class="search-text" type="text" asp-for="ProductName" />
+    </p>
+    <p>
+        <input class="filter-clickable"  type="submit" value="Filter" />
     </p>
 </form>
 
@@ -21,7 +23,7 @@
 <p>
     @if (ViewData["ProductName"] != null)
     {
-        <div>Search Result for @ViewData["ProductName"]</div>
+        <div class="search-result">Search Result for @ViewData["ProductName"]</div>
     }
 </p>
 
