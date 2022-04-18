@@ -87,6 +87,18 @@ namespace ElectronicStoreTests
             Assert.AreEqual("The Category of Products field is required.", _webDriver.FindElement(By.CssSelector("span.text-danger")).Text);
         }
 
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateCategory_EditBlankProductCategory()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[1].Click();
+            _webDriver.FindElement(By.CssSelector("a.edit-clickable")).Click();
+            var input = _webDriver.FindElement(By.CssSelector("input[name='CategoryName']"));
+            input.Clear();
+            _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
+            Assert.AreEqual("The Category of Products field is required.", _webDriver.FindElement(By.CssSelector("span.text-danger")).Text);
+        }
+
 
         [TestCleanup]
         public void TearDown()

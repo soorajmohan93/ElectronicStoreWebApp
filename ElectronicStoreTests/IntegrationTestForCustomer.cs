@@ -102,7 +102,45 @@ namespace ElectronicStoreTests
             var input = _webDriver.FindElement(By.CssSelector("input[name='PhoneNumber']")); ;
             input.SendKeys("Test");
             input = _webDriver.FindElement(By.CssSelector("input[name='CustomerEmail']"));
-            input.SendKeys("-10");
+            input.SendKeys("test");
+            _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
+            Assert.AreEqual("Invalid Mobile Number. Enter 10 digit Phone Number.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[2].Text);
+            Assert.AreEqual("The Email ID of Customer field is not a valid e-mail address.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[3].Text);
+        }
+
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateCustomer_EditBlankCustomer()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[3].Click();
+            _webDriver.FindElement(By.CssSelector("a.edit-clickable")).Click();
+            var input = _webDriver.FindElement(By.CssSelector("input[name='CustomerName']"));
+            input.Clear();
+            input = _webDriver.FindElement(By.CssSelector("input[name='CustomerAddress']"));
+            input.Clear();
+            input = _webDriver.FindElement(By.CssSelector("input[name='PhoneNumber']"));
+            input.Clear();
+            input = _webDriver.FindElement(By.CssSelector("input[name='CustomerEmail']"));
+            input.Clear();
+            _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
+            Assert.AreEqual("The Name of Customer field is required.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[0].Text);
+            Assert.AreEqual("The Customer Phone Number field is required.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[2].Text);
+            Assert.AreEqual("The Email ID of Customer field is required.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[3].Text);
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateCustomer_EditInvalidCustomer()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[3].Click();
+            _webDriver.FindElement(By.CssSelector("a.edit-clickable")).Click();
+            var input = _webDriver.FindElement(By.CssSelector("input[name='PhoneNumber']"));
+            input.Clear();
+            input.SendKeys("Test");
+            input = _webDriver.FindElement(By.CssSelector("input[name='CustomerEmail']"));
+            input.Clear();
+            input.SendKeys("test");
             _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
             Assert.AreEqual("Invalid Mobile Number. Enter 10 digit Phone Number.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[2].Text);
             Assert.AreEqual("The Email ID of Customer field is not a valid e-mail address.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[3].Text);

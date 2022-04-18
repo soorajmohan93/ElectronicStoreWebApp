@@ -39,6 +39,20 @@ namespace ElectronicStoreTests
         }
 
         [TestMethod]
+        [DataRow("Electronic Product")]
+        [DataRow("Big Electronic Product")]
+        [DataRow("Very Big Electronic Product")]
+        public void HomePage_NavigateHome_NavigateProduct_SearchMultipleProduct(string inputText)
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
+            var input = _webDriver.FindElement(By.CssSelector("input[name='ProductName']"));
+            input.SendKeys(inputText);
+            _webDriver.FindElement(By.CssSelector("input.filter-clickable")).Click();
+            Assert.AreEqual($"Search Result for {inputText}", _webDriver.FindElement(By.CssSelector("div.search-result")).Text);
+        }
+
+        [TestMethod]
         public void HomePage_NavigateHome_NavigateProduct_NavigateCreateProduct()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
@@ -118,6 +132,44 @@ namespace ElectronicStoreTests
             _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
             Assert.AreEqual("The field Price of Product must be a number.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[2].Text);
             Assert.AreEqual("Quantity should be greater than 0.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[3].Text);
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateProduct_EditBlankProduct()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
+            _webDriver.FindElement(By.CssSelector("a.edit-clickable")).Click();
+            var input = _webDriver.FindElement(By.CssSelector("input[name='ProductName']"));
+            input.Clear();
+            input = _webDriver.FindElement(By.CssSelector("input[name='ProductDesc']"));
+            input.Clear();
+            input = _webDriver.FindElement(By.CssSelector("input[name='ProductPrice']"));
+            input.Clear();
+            input = _webDriver.FindElement(By.CssSelector("input[name='ProductStock']"));
+            input.Clear();
+            _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
+            Assert.AreEqual("The Name of Product field is required.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[0].Text);
+            Assert.AreEqual("The Description of Product field is required.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[2].Text);
+            Assert.AreEqual("The Price of Product field is required.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[3].Text);
+            Assert.AreEqual("The Quantity of Product in Stock field is required.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[4].Text);
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateProduct_EditProductWithInvalidNumbers()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
+            _webDriver.FindElement(By.CssSelector("a.edit-clickable")).Click();
+            var input = _webDriver.FindElement(By.CssSelector("input[name='ProductPrice']"));
+            input.Clear();
+            input.SendKeys("Test");
+            input = _webDriver.FindElement(By.CssSelector("input[name='ProductStock']"));
+            input.Clear();
+            input.SendKeys("-10");
+            _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
+            Assert.AreEqual("The field Price of Product must be a number.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[3].Text);
+            Assert.AreEqual("Quantity should be greater than 0.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[4].Text);
         }
 
         [TestCleanup]

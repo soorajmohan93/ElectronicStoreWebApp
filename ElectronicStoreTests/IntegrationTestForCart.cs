@@ -68,6 +68,31 @@ namespace ElectronicStoreTests
         }
 
         [TestMethod]
+        public void HomePage_NavigateHome_NavigateCart_EditBlankCartItem()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[4].Click();
+            _webDriver.FindElement(By.CssSelector("a.edit-clickable")).Click();
+            var input = _webDriver.FindElement(By.CssSelector("input[name='CartQuantity']"));
+            input.Clear();
+            _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
+            Assert.AreEqual("The Quantity of Product in Cart field is required.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[2].Text);
+        }
+
+        [TestMethod]
+        public void HomePage_NavigateHome_NavigateCart_EditInvalidCartItem()
+        {
+            _webDriver.Navigate().GoToUrl("http://localhost:21177");
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[4].Click();
+            _webDriver.FindElement(By.CssSelector("a.edit-clickable")).Click();
+            var input = _webDriver.FindElement(By.CssSelector("input[name='CartQuantity']"));
+            input.Clear();
+            input.SendKeys("-10");
+            _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
+            Assert.AreEqual("Quantity should be greater than 0.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[2].Text);
+        }
+
+        [TestMethod]
         public void HomePage_NavigateHome_NavigateCart_NavigateDeleteCart()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
