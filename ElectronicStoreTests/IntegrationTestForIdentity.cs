@@ -23,7 +23,7 @@ namespace ElectronicStoreTests
         public void HomePage_NavigateHome_NavigateProduct_NavigateIdentityRegister()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
-            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[5].Click();
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[4].Click();
             Assert.IsTrue(_webDriver.Title.Contains("Register - ESA"));
         }
 
@@ -31,7 +31,7 @@ namespace ElectronicStoreTests
         public void HomePage_NavigateHome_NavigateProduct_NavigateIdentityLogin()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
-            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[6].Click();
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[5].Click();
             Assert.IsTrue(_webDriver.Title.Contains("Log in - ESA"));
         }
 
@@ -39,7 +39,7 @@ namespace ElectronicStoreTests
         public void HomePage_NavigateHome_NavigateProduct_IdentityLogin_InvalidLogin()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
-            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[6].Click();
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[5].Click();
             Assert.IsTrue(_webDriver.Title.Contains("Log in - ESA"));
             var input = _webDriver.FindElement(By.CssSelector("input[name='Input.UserName']"));
             input.SendKeys("WrongUser");

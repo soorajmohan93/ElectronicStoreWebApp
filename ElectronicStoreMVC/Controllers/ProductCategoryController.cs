@@ -27,24 +27,6 @@ namespace ElectronicStoreMVC.Controllers
             return View(await _context.ProductCategory.ToListAsync());
         }
 
-        // GET: ProductCategory/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var productCategory = await _context.ProductCategory
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
-            if (productCategory == null)
-            {
-                return NotFound();
-            }
-
-            return View(productCategory);
-        }
-
         // GET: ProductCategory/Create
         public IActionResult Create()
         {

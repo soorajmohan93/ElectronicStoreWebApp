@@ -23,7 +23,7 @@ namespace ElectronicStoreTests
         public void HomePage_NavigateHome_NavigateCustomer()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
-            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[3].Click();
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
             Assert.IsTrue(_webDriver.Title.Contains("Maintain Customers"));
         }
 
@@ -31,7 +31,7 @@ namespace ElectronicStoreTests
         public void HomePage_NavigateHome_NavigateCustomer_NavigateCreateCustomer()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
-            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[3].Click();
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
             _webDriver.FindElement(By.CssSelector("a.create-new-clickable")).Click();
             Assert.IsTrue(_webDriver.Title.Contains("Create Customer"));
         }
@@ -40,7 +40,7 @@ namespace ElectronicStoreTests
         public void HomePage_NavigateHome_NavigateCustomer_NavigateEditCustomer()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
-            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[3].Click();
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
             _webDriver.FindElement(By.CssSelector("a.edit-clickable")).Click();
             Assert.IsTrue(_webDriver.Title.Contains("Edit Customer"));
         }
@@ -49,7 +49,7 @@ namespace ElectronicStoreTests
         public void HomePage_NavigateHome_NavigateCustomer_NavigateDeleteCustomer()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
-            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[3].Click();
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
             _webDriver.FindElement(By.CssSelector("a.delete-clickable")).Click();
             Assert.IsTrue(_webDriver.Title.Contains("Delete Customer"));
         }
@@ -58,7 +58,7 @@ namespace ElectronicStoreTests
         public void HomePage_NavigateHome_NavigateCustomer_NavigateCustomerDetails()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
-            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[3].Click();
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
             _webDriver.FindElement(By.CssSelector("a.details-clickable")).Click();
             Assert.IsTrue(_webDriver.Title.Contains("Customer Details"));
         }
@@ -67,7 +67,7 @@ namespace ElectronicStoreTests
         public void HomePage_NavigateHome_NavigateCustomer_CreateCustomer()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
-            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[3].Click();
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
             _webDriver.FindElement(By.CssSelector("a.create-new-clickable")).Click();
             var input = _webDriver.FindElement(By.CssSelector("input[name='CustomerName']"));
             input.SendKeys("Testing Customer");
@@ -85,7 +85,7 @@ namespace ElectronicStoreTests
         public void HomePage_NavigateHome_NavigateCustomer_CreateBlankCustomer()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
-            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[3].Click();
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
             _webDriver.FindElement(By.CssSelector("a.create-new-clickable")).Click();
             _webDriver.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
             Assert.AreEqual("The Name of Customer field is required.", _webDriver.FindElements(By.CssSelector("span.text-danger"))[0].Text);
@@ -97,7 +97,7 @@ namespace ElectronicStoreTests
         public void HomePage_NavigateHome_NavigateCustomer_CreateCustomerWithInvalidData()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
-            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[3].Click();
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
             _webDriver.FindElement(By.CssSelector("a.create-new-clickable")).Click();
             var input = _webDriver.FindElement(By.CssSelector("input[name='PhoneNumber']")); ;
             input.SendKeys("Test");
@@ -113,7 +113,7 @@ namespace ElectronicStoreTests
         public void HomePage_NavigateHome_NavigateCustomer_EditBlankCustomer()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
-            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[3].Click();
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
             _webDriver.FindElement(By.CssSelector("a.edit-clickable")).Click();
             var input = _webDriver.FindElement(By.CssSelector("input[name='CustomerName']"));
             input.Clear();
@@ -133,7 +133,7 @@ namespace ElectronicStoreTests
         public void HomePage_NavigateHome_NavigateCustomer_EditInvalidCustomer()
         {
             _webDriver.Navigate().GoToUrl("http://localhost:21177");
-            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[3].Click();
+            _webDriver.FindElements(By.CssSelector("a.nav-link.text-dark"))[2].Click();
             _webDriver.FindElement(By.CssSelector("a.edit-clickable")).Click();
             var input = _webDriver.FindElement(By.CssSelector("input[name='PhoneNumber']"));
             input.Clear();
