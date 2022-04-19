@@ -39,7 +39,7 @@
                 Description
             </th>
             <th>
-                Price in CAD
+                Price
             </th>
             <th>
                 Stock Quantity
@@ -61,7 +61,7 @@
         @Html.DisplayFor(modelItem => item.ProductDesc)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.ProductPrice)
+        CAD @item.ProductPrice.ToString("F")
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.ProductStock)

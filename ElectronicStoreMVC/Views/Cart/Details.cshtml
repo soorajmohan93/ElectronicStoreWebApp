@@ -1,8 +1,7 @@
 @model ElectronicStoreModels.Models.Cart
+@using ElectronicStoreModels
 
-@{
-    ViewData["Title"] = "Cart Item Details";
-}
+@{ ViewData["Title"] = "Cart Item Details"; }
 
 <h1>Cart Item Details</h1>
 
@@ -11,13 +10,19 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Products)
+            Product
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Products.ProductName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Customers)
+            Product Price
+        </dt>
+        <dd class="col-sm-10">
+            CAD @Model.Products.ProductPrice.ToString("F")
+        </dd>
+        <dt class="col-sm-2">
+            Customer
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Customers.CustomerName)
@@ -27,6 +32,12 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CartQuantity)
+        </dd>
+        <dt class="col-sm-2">
+            Total Price
+        </dt>
+        <dd class="col-sm-10">
+            CAD @Calculations.TotalPrice(Model.Products.ProductPrice, Model.CartQuantity).ToString("F")
         </dd>
     </dl>
 </div>

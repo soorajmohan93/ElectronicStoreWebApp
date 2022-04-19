@@ -9,6 +9,7 @@ using ElectronicStoreModels.Models;
 using ElectronicStoreMVC.Models;
 using ElectronicStoreModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ElectronicStoreMVC.Controllers
 {
@@ -77,16 +78,30 @@ namespace ElectronicStoreMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cart);
                 var query = from p in _context.Product
                             where p.ProductId == cart.Product
                             select p;
                 Product product = query.FirstOrDefault<Product>();
                 try
                 {
+                    int stock = product.ProductStock;
                     product.ProductStock = Calculations.RemainingQuantity(product.ProductStock, cart.CartQuantity);
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
+                    if (product.ProductStock >= 0)
+                    {
+                        _context.Add(cart);
+                        _context.Update(product);
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        //If cart quantity is greater than stock quantity then cart item should not be created
+                        //Code refered from https://stackoverflow.com/questions/43561214/display-error-message-on-the-view-from-controller-asp-net-mvc-5
+                        ModelState.AddModelError(nameof(cart.CartQuantity), $"Cart Quantity should not be greater than quantity in stock: {stock}");
+                        ViewData["Customer"] = new SelectList(_context.Customer, "CustomerId", "CustomerName", cart.Customer);
+                        ViewData["Product"] = new SelectList(_context.Product, "ProductId", "ProductName", cart.Product);
+                        return View(cart);
+                    }
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -152,10 +167,23 @@ namespace ElectronicStoreMVC.Controllers
                     Product product = queryProduct.FirstOrDefault<Product>();
                     try
                     {
+                        int stock = product.ProductStock + oldCart.CartQuantity;
                         product.ProductStock = Calculations.RemainingQuantity(product.ProductStock, cart.CartQuantity - oldCart.CartQuantity);
-                        _context.Update(cart);
-                        _context.Update(product);
-                        await _context.SaveChangesAsync();
+                        if (product.ProductStock >= 0)
+                        {
+                            _context.Update(cart);
+                            _context.Update(product);
+                            await _context.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            //If cart quantity is greater than stock quantity then cart item should not be updated
+                            //Code refered from https://stackoverflow.com/questions/43561214/display-error-message-on-the-view-from-controller-asp-net-mvc-5
+                            ModelState.AddModelError(nameof(cart.CartQuantity), $"Cart Quantity should not be greater than quantity in stock: {stock}");
+                            ViewData["Customer"] = new SelectList(_context.Customer, "CustomerId", "CustomerName", cart.Customer);
+                            ViewData["Product"] = new SelectList(_context.Product, "ProductId", "ProductName", cart.Product);
+                            return View(cart);
+                        }
                     }
                     catch (DbUpdateConcurrencyException)
                     {

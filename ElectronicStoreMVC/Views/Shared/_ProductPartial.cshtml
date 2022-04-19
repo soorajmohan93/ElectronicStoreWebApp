@@ -9,8 +9,8 @@
         <p>@Model.ProductDesc</p>
     </header>
     <section class="card-numbers">
-        <div><span>Price: CAD @Model.ProductPrice</span></div>
+        <div><span>Price: CAD @Model.ProductPrice.ToString("F")</span></div>
         <div><span>Stock Quantity: @Model.ProductStock</span></div>
-        <div><span>Stock Value: CAD @Calculations.TotalPrice(@Model.ProductPrice, @Model.ProductStock)</span></div>
+        <div><span>Stock Value: CAD @Calculations.TotalPrice(@Model.ProductPrice, @Model.ProductStock).ToString("F")</span></div>
     </section>
 </section>

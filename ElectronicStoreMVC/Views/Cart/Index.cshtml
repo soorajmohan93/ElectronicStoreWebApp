@@ -1,4 +1,5 @@
 @model ElectronicStoreMVC.Models.CartViewModel
+@using ElectronicStoreModels
 
 @{
     ViewData["Title"] = "Maintain Cart";
@@ -32,6 +33,9 @@
             <th>
                 Quantity
             </th>
+            <th>
+                Total Price
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -46,6 +50,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CartQuantity)
+            </td>
+            <td>
+                CAD @Calculations.TotalPrice(item.Products.ProductPrice, item.CartQuantity).ToString("F")
             </td>
             <td>
                 <a class="edit-clickable" asp-action="Edit" asp-route-id="@item.CartId">Edit</a> |
