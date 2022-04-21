@@ -22,6 +22,7 @@ namespace ElectronicStoreMVC.Controllers
 
         public IActionResult Index(string ProductName)
         {
+            //logic for searching products
             var products = from p in _context.Product.Include(c => c.ProductCategory)
                         select p;
 

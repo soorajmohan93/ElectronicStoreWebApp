@@ -27,6 +27,7 @@ namespace ElectronicStoreMVC.Controllers
 
         public IActionResult Index()
         {
+            //List to display product and product categories on home screen
             ProductCategories = _DbContext.ProductCategory.ToList();
             Products = _DbContext.Product.ToList();
             return View(new IndexViewModel() { ProductCategories = ProductCategories, Products = Products });

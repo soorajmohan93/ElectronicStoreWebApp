@@ -37,6 +37,7 @@
             Total Price
         </dt>
         <dd class="col-sm-10">
+@*Display total price for item*@
             CAD @Calculations.TotalPrice(Model.Products.ProductPrice, Model.CartQuantity).ToString("F")
         </dd>
     </dl>

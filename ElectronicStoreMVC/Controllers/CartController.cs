@@ -25,7 +25,7 @@ namespace ElectronicStoreMVC.Controllers
         // GET: Cart
         public IActionResult Index(int? Customer)
         {
-
+            //logic for filtering customers
             ViewData["Customer"] = new SelectList(_context.Customer, "CustomerId", "CustomerName");
 
             var carts = from c in _context.Cart.Include(c => c.Customers).Include(c => c.Products)
@@ -78,6 +78,7 @@ namespace ElectronicStoreMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                //creating cart item with quantity x should reduce stock quantity by x
                 var query = from p in _context.Product
                             where p.ProductId == cart.Product
                             select p;
@@ -128,7 +129,7 @@ namespace ElectronicStoreMVC.Controllers
             {
                 return NotFound();
             }
-
+            // including customer and products in query to display customer name and product name
             var cart = await _context.Cart.Include(c => c.Customers).Include(c => c.Products).FirstOrDefaultAsync(m => m.CartId == id);
             if (cart == null)
             {
@@ -156,7 +157,7 @@ namespace ElectronicStoreMVC.Controllers
             {
                 try
                 {
-                    var queryCart = from c in _context.Cart.AsNoTracking()
+                    var queryCart = from c in _context.Cart.Include(c => c.Customers).Include(c => c.Products).AsNoTracking()
                                 where c.CartId == cart.CartId
                                 select c;
                     Cart oldCart = queryCart.FirstOrDefault<Cart>();
@@ -168,6 +169,7 @@ namespace ElectronicStoreMVC.Controllers
                     try
                     {
                         int stock = product.ProductStock + oldCart.CartQuantity;
+                        //reduce difference in old cart quantity and new cart quantity from stock
                         product.ProductStock = Calculations.RemainingQuantity(product.ProductStock, cart.CartQuantity - oldCart.CartQuantity);
                         if (product.ProductStock >= 0)
                         {
@@ -178,11 +180,13 @@ namespace ElectronicStoreMVC.Controllers
                         else
                         {
                             //If cart quantity is greater than stock quantity then cart item should not be updated
-                            //Code refered from https://stackoverflow.com/questions/43561214/display-error-message-on-the-view-from-controller-asp-net-mvc-5
+                            //Error display logic refered from https://stackoverflow.com/questions/43561214/display-error-message-on-the-view-from-controller-asp-net-mvc-5
                             ModelState.AddModelError(nameof(cart.CartQuantity), $"Cart Quantity should not be greater than quantity in stock: {stock}");
+
+                            oldCart.CartQuantity = cart.CartQuantity;
                             ViewData["Customer"] = new SelectList(_context.Customer, "CustomerId", "CustomerName", cart.Customer);
                             ViewData["Product"] = new SelectList(_context.Product, "ProductId", "ProductName", cart.Product);
-                            return View(cart);
+                            return View(oldCart);
                         }
                     }
                     catch (DbUpdateConcurrencyException)

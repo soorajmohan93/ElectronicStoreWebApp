@@ -9,6 +9,7 @@ namespace ElectronicStoreMVC.Models
 {
     public class CartViewModel
     {
+        //To filter cart list with customer
         [BindProperty(SupportsGet = true)]
         public string Customer { get; set; }
 

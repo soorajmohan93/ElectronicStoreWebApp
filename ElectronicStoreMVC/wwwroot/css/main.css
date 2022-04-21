@@ -2,13 +2,13 @@
     float: left;
     margin: 1rem;
     width: 20rem;
-    height: 15rem;
+    height: 20rem;
     text-align: center;
     border-radius: 0.2em;
     background: linear-gradient(to right, #42a5f5, #80d6ff );
 }
 
 .card-header {
-    height: 10rem;
+    height: 15rem;
 }
 
